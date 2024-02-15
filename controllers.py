@@ -1,19 +1,15 @@
-
-import main
 import models
 import repository
-import uuid
 import utils
 from flask import Flask, request, jsonify
+from main import jwt, create_access_token, get_jwt_identity
 
 def create_user():
-
-    requestid = str(uuid.uuid4())
 
     password = utils.criptografar_password(request.json.get('password'))
 
     user = models.User(
-        request.json.get('nome'),
+        request.json.get('name'),
         request.json.get('nickname'),
         password
         )
@@ -28,6 +24,33 @@ def create_user():
 
     return jsonify({
         "message": "usuário criado com sucesso",
-        "requestID": requestid
     }), 201
     
+def login():
+
+    password = utils.criptografar_password(request.json.get('password'))
+
+    user = models.User(
+        None,
+        request.json.get('nickname'),
+        password
+        )
+    
+    login, err = repository.verify_user(user)
+
+    if not login:
+        return jsonify({
+            "message": "erro no nickname ou senha",
+            "error": str(err)
+        }), 502
+    
+    access_token = create_access_token(identity=user.nickname)
+    
+    return jsonify({
+        "message": "usuário encontrado",
+        "token": access_token
+    }), 200
+
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
