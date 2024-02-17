@@ -7,6 +7,19 @@ from flask import jsonify
 def create_user():
     return controllers.create_user()
 
+<<<<<<< HEAD
+@app.route("/api/v1/user/<nickname>", methods=["DELETE"])
+def delete_user(nickname):
+    return controllers.delete_user(nickname)
+
+@app.route("/api/v1/user/<nickname>", methods=["GET"])
+def read_user(nickname):
+    return controllers.read_user(nickname)
+
+@app.route("/api/v1/user/<nickname>", methods=["PUT"])
+def update_user(nickname):
+    return controllers.update_user(nickname)
+=======
 @app.route("/api/v1/login", methods=["POST"])
 def login():
     return controllers.login()
@@ -15,6 +28,7 @@ def login():
 @jwt_required()
 def protected():
     return controllers.protected()
+>>>>>>> develop
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
