@@ -41,7 +41,7 @@ def delete_user(nickname):
         "message": "usuário deletado com sucesso",
     }), 201
 
-def read_user(nickname):
+def get_user(nickname):
 
     exists, value = repository.get_user(nickname)
     
