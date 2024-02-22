@@ -8,7 +8,7 @@ def create_user():
     return controllers.create_user()
 
 @app.route("/api/v1/user/<nickname>", methods=["DELETE"])
-@jwt_required
+@jwt_required()
 def delete_user(nickname):
     return controllers.delete_user(nickname)
 
@@ -17,7 +17,7 @@ def get_user(nickname):
     return controllers.get_user(nickname)
 
 @app.route("/api/v1/user/<nickname>", methods=["PUT"])
-@jwt_required
+@jwt_required()
 def update_user(nickname):
     return controllers.update_user(nickname)
 
