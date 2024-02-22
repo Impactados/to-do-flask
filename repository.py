@@ -1,8 +1,8 @@
-from models import User
+import models
 import utils
 import psycopg2
 
-def save_user(User: User):
+def save_user(User: models.User):
     try:
         conn = utils.connect_database()
         cursor = conn.cursor()
@@ -93,7 +93,7 @@ def update_user(nickname, data):
     except Exception as err:
         return False, err
 
-def verify_user(User: User):
+def verify_user(User: models.User):
 
     try:
         conn = utils.connect_database()
