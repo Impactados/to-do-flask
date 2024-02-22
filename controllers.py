@@ -1,12 +1,13 @@
 import models
 import repository
 import utils
+import service
 from flask import Flask, request, jsonify
 from main import jwt, create_access_token, get_jwt_identity
 
 def create_user():
-
-    password = utils.criptografar_password(request.json.get('password'))
+    
+    password = service.criptografar_password(request.json.get('password'))
 
     user = models.User(
         request.json.get('name'),
@@ -14,7 +15,7 @@ def create_user():
         password
     )
 
-    save, err = repository.save_user(user)
+    save, err = service.save_user(user)
 
     if not save:
         return jsonify({
