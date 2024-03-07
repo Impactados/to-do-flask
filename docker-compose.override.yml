@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    environment:
+      - DATABASE=dev_database
+      - HOST=localhost
+      - PASSWORD=@1971KndM!DB
+      - PORT=5432
+      - USER=dev_user
+      - SECRET=dev_secret_key
+  db:
+    environment:
+      - MYSQL_DATABASE=dev_database
+      - MYSQL_USER=dev_user
+      - MYSQL_PASSWORD=@1971KndM!DB
+      - MYSQL_ROOT_PASSWORD=@1971KndM!DB
