@@ -33,8 +33,7 @@ class UserService:
             if conn.is_connected():
                 cursor.close()
                 conn.close()
-
-    return True, None
+        return True, None
 
 
     def remove_user(nickname):
