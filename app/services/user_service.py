@@ -1,4 +1,6 @@
 import utils
+import mysql.connector
+from mysql.connector import Error
 from models.user import User
 
 class UserService:
@@ -21,48 +23,69 @@ class UserService:
 
             return True, None
 
-        except psycopg2.errors.UniqueViolation as err:
+        except mysql.connector.IntegrityError as err:
+            conn.rollback()
             return False, f"Nickname '{User.nickname}' já está em uso"
-
-        except Exception as err:
+        except Error as err:
+            conn.rollback()
             return False, err
+        finally:
+            if conn.is_connected():
+                cursor.close()
+                conn.close()
+
+    return True, None
 
 
     def remove_user(nickname):
-
+        conn = None
+        cursor = None
         try:
             conn = utils.connect_database()
             cursor = conn.cursor()
             query = """DELETE FROM users WHERE nickname = %s"""
-            cursor.execute(query, (nickname, ))
+            cursor.execute(query, (nickname,))
             conn.commit()
-            conn.close()
 
-            return True, None
-        
-        except Exception as err:
+        except Error as err:
+            conn.rollback()
             return False, err
 
-    def get_user(nickname):
+        finally:
+            if cursor:
+                cursor.close()
+            if conn and conn.is_connected():
+                conn.close()
 
+        return True, None
+
+    def get_user(nickname):
+        conn = None
+        cursor = None
         try:
             conn = utils.connect_database()
             cursor = conn.cursor()
             query = """SELECT * FROM users WHERE nickname = %s"""
-            cursor.execute(query, (nickname, ))
+            cursor.execute(query, (nickname,))
             user = cursor.fetchone()
-            
-            conn.close()
 
             if user:
                 return True, user
             else:
                 return False, "Usuário não encontrado"
-        
-        except Exception as err:
+            
+        except Error as err:
             return False, err
+
+        finally:
+            if cursor:
+                cursor.close()
+            if conn and conn.is_connected():
+                conn.close()
         
     def update_user(nickname, data):
+        conn = None
+        cursor = None
         try:
             conn = utils.connect_database()
             cursor = conn.cursor()
@@ -75,45 +98,47 @@ class UserService:
                 if result is not None:
                     return False, f"Nickname '{data['nickname']}' já está em uso"
 
-            
             update_fields = ", ".join([f"{key} = %s" for key in data.keys()])
             query = f"""UPDATE users SET {update_fields} WHERE nickname = %s"""
-
-            
             values = list(data.values())
             values.append(nickname)
-
-            
             cursor.execute(query, tuple(values))
             conn.commit()
-            conn.close()
 
-            return True, None
-        
-        except Exception as err:
+        except Error as err:
+            conn.rollback()  # Adicionado rollback em caso de erro.
             return False, err
 
-    def verify_user(User: User):
+        finally:
+            if cursor:
+                cursor.close()
+            if conn and conn.is_connected():
+                conn.close()
 
+        return True, None
+
+    def verify_user(User):
+        conn = None
+        cursor = None
         try:
             conn = utils.connect_database()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM users WHERE nickname = %s AND password = %s", (User.nickname, User.password))
             user = cursor.fetchone()
-            cursor.close()
-            conn.close()
 
-            if user == None:
-                return False, "usuario nao encontrado no banco de dados"
+            if user is None:
+                return False, "Usuário não encontrado no banco de dados"
             
             return True, None
 
-        except Exception as err:
+        except Error as err:
             return False, err
 
-    def save_user(user: User):
-        save, err = repository.save_user(user)
-        return save, err
+        finally:
+            if cursor:
+                cursor.close()
+            if conn and conn.is_connected():
+                conn.close()
 
     def criptografar_password(password):
         return utils.criptografar_password(password)

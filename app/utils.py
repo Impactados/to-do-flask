@@ -1,11 +1,11 @@
-import psycopg2
+import mysql.connector
 import config
 import hashlib
 
 def connect_database():
     
     try:
-        connection = psycopg2.connect(
+        connection = mysql.connector.connect(
             host=config.host,
             database=config.database,
             user=config.user,
