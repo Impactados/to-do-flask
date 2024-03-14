@@ -1,6 +1,7 @@
 class Task():
-    def __init__(self, titulo, descricao, status, nickname):    
-        self.titulo = titulo
-        self.descricao = descricao
+    def __init__(self, title, description, status, timer, user_id):    
+        self.title = title
+        self.description = description
         self.status = status
-        self.nickname = nickname
+        self.timer = timer
+        self.user_id = user_id
