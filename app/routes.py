@@ -4,6 +4,8 @@ from flask_jwt_extended import jwt_required
 
 # controlers
 from controllers.user_controller import UserController
+from controllers.task_controller import TaskController
+
 
 # API ROUTES
 
@@ -22,6 +24,11 @@ def update_user(nickname):
 @jwt_required()
 def protected():
     return UserController.protected()
+
+@app.route("/api/v1/task/<nickname>", methods=['POST'])
+@jwt_required()
+def create_task(nickname):
+    return TaskController.create_task(nickname)
 
 ## PROTECTED 
 
