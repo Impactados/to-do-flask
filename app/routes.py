@@ -27,8 +27,11 @@ def update_user(nickname):
 def protected():
     return UserController.protected()
 
+@app.route("/api/v1/task/<nickname>", methods=['GET'])
+def render_create_task(nickname):
+    return render_template('task.html', nickname = nickname)
+
 @app.route("/api/v1/task/<nickname>", methods=['POST'])
-@jwt_required()
 def create_task(nickname):
     return TaskController.create_task(nickname)
 

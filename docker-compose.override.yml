@@ -3,7 +3,7 @@ version: '3.3'
 services:
   todo_application:
     environment:
-      - DATABASE_HOST=todo_datab  # Use o nome do serviço como hostname
+      - DATABASE_HOST=todo_database  # Use o nome do serviço como hostname
       - DATABASE_USER=dev_user
       - DATABASE_PASSWORD=@1971KndM!DB
       - DATABASE_NAME=dev_database

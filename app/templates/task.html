@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+</head>
+<body>
+    <h2>To-Do-Flask</h2>
+    <form action="/api/v1/task/{{ nickname }}" method="POST">
+        <label for="title">Título:</label><br>
+        <input type="text" id="title" name="title"><br>
+        
+        <label for="description">Descrição:</label><br>
+        <textarea id="description" name="description"></textarea><br>
+        
+        <label for="status">Status:</label><br>
+        <input type="text" id="status" name="status"><br>
+        
+        <label for="timer">Timer:</label><br>
+        <input type="text" id="timer" name="timer"><br>
+        
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
