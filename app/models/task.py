@@ -1,5 +1,3 @@
-import psycopg2
-
 class Task():
     def __init__(self, titulo, descricao, status, nickname):    
         self.titulo = titulo
