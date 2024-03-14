@@ -12,11 +12,11 @@ services:
     command: flask run --host=0.0.0.0 --port=5000
 
   db:
-    image: mysql:8.0  # ou use mysql:8.0 se preferir a versão mais recente
+    image: mysql:8.0
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - "3306:3306"  # Porta padrão do MySQL
+      - "3306:3306"
 
 volumes:
   mysql_data:

@@ -14,6 +14,7 @@ COPY . .
 # Definir variáveis de ambiente
 ENV FLASK_APP=app/main.py
 ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_ENV=development
 
 # Expor a porta em que o Flask será executado
 EXPOSE 5000
