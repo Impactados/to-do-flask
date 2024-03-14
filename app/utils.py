@@ -1,23 +1,19 @@
 import mysql.connector
-import config
 import hashlib
+import os
 
 def connect_database():
-    
     try:
         connection = mysql.connector.connect(
-            host=config.host,
-            database=config.database,
-            user=config.user,
-            password=config.password,
-            port=config.port
+            host=os.getenv("DATABASE_HOST", "db"),
+            user=os.getenv("DATABASE_USER", "your_user"),
+            password=os.getenv("DATABASE_PASSWORD", "your_user_password"),
+            database=os.getenv("DATABASE_NAME", "your_database")
         )
-
+        
         return connection
-    
-    except Exception as err:
-
-        return None
+    except mysql.connector.Error as err:
+        raise err
     
 def criptografar_password(password):
     password_codificado = password.encode('utf-8')
