@@ -122,7 +122,7 @@ class UserService:
         try:
             conn = utils.connect_database()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM users WHERE nickname = %s AND password = %s", (User.nickname, User.password))
+            cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (User.nickname, User.password))
             user = cursor.fetchone()
 
             if user is None:

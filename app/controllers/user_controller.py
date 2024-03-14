@@ -1,10 +1,10 @@
 # import models
 # import repository
-# import utils
 # import service
 # from flask import Flask, request, jsonify
-# from main import jwt, create_access_token, get_jwt_identity
+from main import jwt, create_access_token, get_jwt_identity
 
+import utils
 from models.user import User
 from services.user_service import UserService
 
@@ -99,7 +99,7 @@ class UserController:
             password
             )
         
-        login, err = repository.verify_user(user)
+        login, err = UserService.verify_user(user)
 
         if not login:
             return jsonify({
