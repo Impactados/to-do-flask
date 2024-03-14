@@ -19,7 +19,12 @@ class UserController:
         user = User(
             request.json.get('name'),
             request.json.get('nickname'),
-            password
+            password,
+            request.json.get('active'),
+            request.json.get('age'),
+            request.json.get('gender'),
+            request.json.get('email'),
+            
         )
 
         save, err = UserService.save_user(user)
@@ -96,7 +101,11 @@ class UserController:
         user = User(
             None,
             request.json.get('nickname'),
-            password
+            password,
+            None,
+            None,
+            None,
+            None
             )
         
         login, err = UserService.verify_user(user)
