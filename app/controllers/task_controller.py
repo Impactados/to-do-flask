@@ -14,12 +14,14 @@ class TaskController:
                 "message": "Unauthorized",
                 "error": str(error)
                 }), 401
-
+        
+        user_id = UserService.check_id(nickname)
         task = Task(
-            request.json.get('titulo'),
-            request.json.get('descricao'),
+            request.json.get('title'),
+            request.json.get('description'),
             request.json.get('status'),
-            nickname
+            request.json.get('timer'),
+            user_id
         )
 
         save, err = TaskService.save_task(task)

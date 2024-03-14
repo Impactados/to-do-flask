@@ -146,5 +146,32 @@ class UserService:
             return False, f"Autorização necessária"
         return True, None
 
+    def check_id(nickname):
+        conn = None
+        cursor = None
+        try:
+            conn = utils.connect_database()
+            cursor = conn.cursor()
+            cursor.execute("SELECT id FROM users WHERE nickname = %s", (nickname,))
+            id_tuple = cursor.fetchone()
+
+            if id_tuple is None:
+                return False, "Id não encontrado no banco de dados"
+            
+            # Acessando o primeiro elemento da tupla
+            id = id_tuple[0]
+            
+            return id
+        
+        except Error as err:
+            return False, err
+        
+        finally:
+            if cursor:
+                cursor.close()
+            if conn and conn.is_connected():
+                conn.close()
+
+
     def criptografar_password(password):
         return utils.criptografar_password(password)
