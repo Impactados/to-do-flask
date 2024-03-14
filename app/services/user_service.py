@@ -138,6 +138,11 @@ class UserService:
                 cursor.close()
             if conn and conn.is_connected():
                 conn.close()
+        
+    def verify_identify(nickname, current_user):
+        if current_user != nickname:
+            return False, f"Autorização necessária"
+        return True, None
 
     def criptografar_password(password):
         return utils.criptografar_password(password)
