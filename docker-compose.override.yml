@@ -1,14 +1,14 @@
-version: '3.8'
+version: '3.3'
 
 services:
-  app:
+  todo_application:
     environment:
-      - DATABASE_HOST=db  # Use o nome do serviço como hostname
+      - DATABASE_HOST=todo_datab  # Use o nome do serviço como hostname
       - DATABASE_USER=dev_user
       - DATABASE_PASSWORD=@1971KndM!DB
       - DATABASE_NAME=dev_database
       - SECRET=dev_secret_key
-  db:
+  todo_database:
     environment:
       - MYSQL_DATABASE=dev_database
       - MYSQL_USER=dev_user

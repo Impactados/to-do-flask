@@ -1,22 +1,47 @@
-version: '3.8'
+version: '3.3'
 
 services:
-  app:
+  todo_application:
     build: .
     ports:
       - "5000:5000"
     volumes:
       - .:/app
+    
     depends_on:
-      - db
+      - todo_database
     command: flask run --host=0.0.0.0 --port=5000
+    networks: 
+      - impactados
 
-  db:
+  todo_database:
     image: mysql:8.0
+    restart: always
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - "3307:3307"
+    networks: 
+      - impactados
 
+  todo_ide:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "5050:80"
+    links:
+      - todo_database
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on:
+      - todo_database
+    networks: 
+      - impactados
+      
 volumes:
   mysql_data:
+
+networks:
+  impactados: 
+    driver: bridge
+
