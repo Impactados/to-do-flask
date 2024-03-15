@@ -1,5 +1,3 @@
-DELETE FROM tasks WHERE user_id IN (SELECT id FROM users);
-
 DROP TABLE IF EXISTS `tasks`;
 DROP TABLE IF EXISTS `users`;
 

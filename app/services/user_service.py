@@ -67,7 +67,7 @@ class UserService:
             conn = utils.connect_database()
             cursor = conn.cursor()
             query = """SELECT * FROM users WHERE nickname = %s"""
-            cursor.execute(query, (nickname,))
+            cursor.execute(query, (nickname))
             user = cursor.fetchone()
 
             if user:

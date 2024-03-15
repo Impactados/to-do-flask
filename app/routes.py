@@ -27,13 +27,17 @@ def update_user(nickname):
 def protected():
     return UserController.protected()
 
-@app.route("/api/v1/task/<nickname>", methods=['GET'])
-def render_create_task(nickname):
-    return render_template('task.html', nickname = nickname)
+# @app.route("/api/v1/task/<nickname>", methods=['GET'])
+# def render_create_task(nickname):
+#     return render_template('task.html', nickname = nickname)
 
-@app.route("/api/v1/task/<nickname>", methods=['POST'])
-def create_task(nickname):
-    return TaskController.create_task(nickname)
+@app.route("/api/v1/task", methods=['POST'])
+def create_task():
+    return TaskController.create_task()
+
+@app.route("/api/v1/get_task/<user_id>", methods=['GET'])
+def get_task(user_id):
+    return TaskController.get_task(user_id)
 
 ## PROTECTED 
 
@@ -51,9 +55,13 @@ def create_user():
 
 # WEB ROUTES
 
-@app.route("/", methods=["GET"])
-def index():
-   return render_template("main.html")
+# @app.route("/", methods=["GET"])
+# def index():
+#    return render_template("main.html")
+
+@app.route("/", methods=['GET'])
+def render_create_task():
+    return render_template('task.html')
 
 # CONFIG ROUTES
 
