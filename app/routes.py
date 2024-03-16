@@ -13,23 +13,16 @@ from controllers.task_controller import TaskController
 
 ## PROTECTED 
 @app.route("/api/v1/user/<nickname>", methods=["DELETE"])
-@jwt_required()
 def delete_user(nickname):
     return UserController.delete_user(nickname)
 
 @app.route("/api/v1/user/<nickname>", methods=["PUT"])
-@jwt_required()
 def update_user(nickname):
     return UserController.update_user(nickname)
 
 @app.route("/api/v1/jwt", methods=["GET"])
-@jwt_required()
 def protected():
     return UserController.protected()
-
-# @app.route("/api/v1/task/<nickname>", methods=['GET'])
-# def render_create_task(nickname):
-#     return render_template('task.html', nickname = nickname)
 
 @app.route("/api/v1/task", methods=['POST'])
 def create_task():
